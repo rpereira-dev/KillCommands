@@ -24,6 +24,7 @@ public class KillCommands extends JavaPlugin implements Listener {
 	private static final String VAR_KILLER_NAME = "killerName";
 	private static final String VAR_KILLED_NAME = "killedName";
 	private static final String VAR_KILLER_IS_PLAYER_NAME = "killerIsPlayer";
+	private static final String VAR_KILLED_WORLD_NAME = "worldName";
 
 	/** js command */
 	private String playerDeathCommand;
@@ -63,17 +64,21 @@ public class KillCommands extends JavaPlugin implements Listener {
 	public void onPlayerDeath(PlayerDeathEvent event) {
 		Player killed = event.getEntity();
 		LivingEntity killer = killed.getKiller();
+		boolean killerIsPlayer = killer instanceof Player;
+		String worldName = killed.getWorld().getName();
 		try {
-			this.run(killed.getName(), killer == null ? "" : killer.getName(), killer instanceof Player);
+			this.run(killed.getName(), killer == null ? "" : killer.getName(), killerIsPlayer, worldName);
 		} catch (ScriptException e) {
 			log("'PlayerDeathEvent' javascript program is not valid, error:");
 			log(e.getLocalizedMessage());
 		}
 	}
 
-	public final void run(String killerName, String killedName, boolean killerIsPlayer) throws ScriptException {
+	public final void run(String killerName, String killedName, boolean killerIsPlayer, String worldName)
+			throws ScriptException {
 		String cmd = "var " + VAR_KILLER_NAME + "='" + killerName + "';var " + VAR_KILLED_NAME + "='" + killedName
-				+ "';var " + VAR_KILLER_IS_PLAYER_NAME + "=" + killerIsPlayer + ";" + this.playerDeathCommand;
+				+ "';var " + VAR_KILLER_IS_PLAYER_NAME + "=" + killerIsPlayer + ";var " + VAR_KILLED_WORLD_NAME + "='"
+				+ worldName + "';" + this.playerDeathCommand;
 		String res = (String) this.engine.eval(cmd);
 		if (res != null && res.length() > 0) {
 			Bukkit.dispatchCommand(Bukkit.getConsoleSender(), res);
