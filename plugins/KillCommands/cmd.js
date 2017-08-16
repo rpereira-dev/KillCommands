@@ -16,6 +16,4 @@ if (killerIsPlayer) {
 
 
 //DEBUG SCRIPT:
-/*
 "say " + "[KilledCommands] " + killerName + " was killed by " + killedName + "(killerIsPlayer=" + killerIsPlayer + ")"
-*/
