@@ -17,5 +17,4 @@ if (killerIsPlayer && worldName == 'world') {
 
 
 //DEBUG SCRIPT:
-
 "say " + "[KilledCommands] " + killerName + " was killed by " + killedName + "(killerIsPlayer=" + killerIsPlayer + ") " + worldName

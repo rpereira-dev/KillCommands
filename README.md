@@ -1,5 +1,5 @@
 # PROVIDED FILES
-	- ./src/* : the source files of the plugin
+	- ./KillCommands/* : the java/yml source files of the plugin
 	- ./plugins/KillCommands.jar : a build of the current version
 	- ./plugins/KillCommands/config.yml : config file
 	- ./plugins/KillCommands/cmd.js : an exemple of javascript command
