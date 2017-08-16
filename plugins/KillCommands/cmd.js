@@ -10,11 +10,12 @@ Global variables:
 
 //GIVE SCRIPT
 /*
-if (killerIsPlayer && worldName == 'world') {
+if (killerIsPlayer) {
 	"give " + killedName + " 1 2"
 }
 */
 
 
 //DEBUG SCRIPT:
-"say " + "[KilledCommands] " + killerName + " was killed by " + killedName + "(killerIsPlayer=" + killerIsPlayer + ") " + worldName
+
+"say " + "[KilledCommands] " + killedName + " was killed by " + killerName + "(killerIsPlayer=" + killerIsPlayer + ") in world: " + worldName

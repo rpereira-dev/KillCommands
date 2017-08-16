@@ -74,7 +74,7 @@ public class KillCommands extends JavaPlugin implements Listener {
 		}
 	}
 
-	public final void run(String killerName, String killedName, boolean killerIsPlayer, String worldName)
+	public final void run(String killedName, String killerName, boolean killerIsPlayer, String worldName)
 			throws ScriptException {
 		String cmd = "var " + VAR_KILLER_NAME + "='" + killerName + "';var " + VAR_KILLED_NAME + "='" + killedName
 				+ "';var " + VAR_KILLER_IS_PLAYER_NAME + "=" + killerIsPlayer + ";var " + VAR_KILLED_WORLD_NAME + "='"
