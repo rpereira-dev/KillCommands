@@ -25,6 +25,16 @@ public class KillCommands extends JavaPlugin implements Listener {
 	private static final String VAR_KILLED_NAME = "killedName";
 	private static final String VAR_KILLER_IS_PLAYER_NAME = "killerIsPlayer";
 	private static final String VAR_KILLED_WORLD_NAME = "worldName";
+	private static final String FUNCTION_RUN_COMMANDS = "function runCommands() {" +
+															"if (arguments.length == 0) {" +
+														    	"return (\"say 'Erreur configuration KillCommands: Aucunes commandes precisees dans runCommands()'\");" +
+														    "}" +
+															"cmd = arguments[0].trim();" +
+														   " for (var i = 1; i < arguments.length; i++) {" +
+														    	"cmd = cmd + \";\" + arguments[i].trim();" +
+															"}" +
+														    "return (cmd);" +
+														"}\n";
 
 	/** js command */
 	private String playerDeathCommand;
@@ -76,12 +86,19 @@ public class KillCommands extends JavaPlugin implements Listener {
 
 	public final void run(String killedName, String killerName, boolean killerIsPlayer, String worldName)
 			throws ScriptException {
-		String cmd = "var " + VAR_KILLER_NAME + "='" + killerName + "';var " + VAR_KILLED_NAME + "='" + killedName
-				+ "';var " + VAR_KILLER_IS_PLAYER_NAME + "=" + killerIsPlayer + ";var " + VAR_KILLED_WORLD_NAME + "='"
-				+ worldName + "';" + this.playerDeathCommand;
-		String res = (String) this.engine.eval(cmd);
+		String javascript = FUNCTION_RUN_COMMANDS + "var " + VAR_KILLER_NAME + "='" + killerName + "';var " + VAR_KILLED_NAME + "='"
+				+ killedName + "';var " + VAR_KILLER_IS_PLAYER_NAME + "=" + killerIsPlayer + ";var "
+				+ VAR_KILLED_WORLD_NAME + "='" + worldName + "';";
+		System.out.println(javascript);
+		String res = (String) this.engine.eval(javascript + this.playerDeathCommand);
 		if (res != null && res.length() > 0) {
-			Bukkit.dispatchCommand(Bukkit.getConsoleSender(), res);
+			String[] cmds = res.split(";");
+			for (String cmd : cmds) {
+				if (cmd.length() == 0) {
+					continue;
+				}
+				Bukkit.dispatchCommand(Bukkit.getConsoleSender(), cmd.trim());
+			}
 		}
 	}
 
